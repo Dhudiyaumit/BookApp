@@ -1,29 +1,33 @@
-import 'package:book_app/consttants.dart';
-import 'package:book_app/screens/home_screen.dart';
-import 'package:book_app/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:new_book/consttants.dart';
+import 'package:new_book/screens/home_screen.dart';
+import 'package:new_book/widget/rounded_button.dart';
+import 'package:http/http.dart' as http;
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Book App',
+      title: 'Book Read',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        textTheme: Theme.of(context).textTheme.apply(
-              displayColor: kBlackColor,
-            ),
+        textTheme: Theme.of(context).textTheme.apply(displayColor: kBlackColor),
       ),
-      home: WelcomeScreen(),
+      home: Welcome(),
     );
   }
 }
 
-class WelcomeScreen extends StatelessWidget {
+class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,46 +35,59 @@ class WelcomeScreen extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/Bitmap.png"),
+            image: AssetImage("assets/image/Bitmap.png"),
             fit: BoxFit.fill,
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RichText(
-              text: TextSpan(
-                style: Theme.of(context).textTheme.displayMedium,
-                children: [
-                  TextSpan(
-                    text: "flamin",
-                  ),
-                  TextSpan(
-                    text: "go.",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * .6,
-              child: RoundedButton(
-                text: "start reading",
-                fontSize: 20,
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomeScreen();
-                      },
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.displayMedium,
+                  children: [
+                    TextSpan(
+                      text: "flamin",
                     ),
-                  );
-                },
+                    TextSpan(
+                      text: "go.",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * .6,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomeScreen();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Start Reading",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          EdgeInsets.all(15)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      )),
+                ),
+              ),
+            ]),
       ),
     );
   }
